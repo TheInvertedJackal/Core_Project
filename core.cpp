@@ -12,7 +12,17 @@ void offset_cursor(int,int);
 
 void print_selection(int, string*, int);
 
+int make_a_selection(string*, int);
+
 const int SELECTION_COUNT = 3;
+
+/*
+    Structure:
+    Jump into cmd
+    Loadable .bat files from folder
+    Add new .bat files via file loader
+    Jump into coding projects [All coding projects => files]                    
+*/
 
 int main(){
     string * selections = new string[SELECTION_COUNT]{
@@ -20,8 +30,15 @@ int main(){
         "12",
         "Select ME!"
     };
+    HANDLE handle;
+    handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    COORD og_pos = get_current_cursor(handle);
     print_selection(-1, selections, SELECTION_COUNT);
-    offset_cursor(0, 0);
+    delete[] selections;
+    return 0;
+}
+
+int make_a_selection(string* selections, int count){
     int selected = 0;
     bool selecting = true;
     char c;
@@ -44,15 +61,12 @@ int main(){
                 break;
         }
     }
-    cout << "You are " << selected + 1 << " spaces from your stating point." << endl;
-    delete[] selections;
-    return 0;
 }
 
-void print_selection(int selected_value, string *selections, int count){
+void print_selection(int selected_value, string* selections, int count){
     for (size_t i = 0; i < count; i++)
     {
-        cout << "(" << i << ")> " << selections[i] << endl;
+        cout << "(" << i << ") > " << selections[i] << endl;
     }
 }
 
